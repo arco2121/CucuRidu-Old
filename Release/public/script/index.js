@@ -542,12 +542,12 @@ Server.on("roomClosed",() => {
     document.getElementById("roomClosed").style.display = "flex"
 })
 
-Server.on("playerLeft",(len) => {
+/*Server.on("playerLeft",(len) => {
     if(len < 3)
     {
         window.location.reload()
     }
-})
+})*/
 
 Server.on("reload",()=>{
     window.location.reload()

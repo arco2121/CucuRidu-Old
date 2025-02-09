@@ -259,7 +259,6 @@ webserver.on("connection",(socket) => {
             }
             else
             {
-                console.log("DIO")
                 webserver.to(socket.id).emit('reload')
             }
         }
