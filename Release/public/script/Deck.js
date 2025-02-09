@@ -18,7 +18,7 @@ class Card
         const div = document.createElement("div")
         div.classList.add("semi")
         const text = document.createElement("h3")
-        text.innerText = this.value
+        text.innerText = this.value.contains("#nomino") ? this.value.replace("#nomino", getRandomNamea()) : this.value;
         text.style.textAlign = "left"
         text.classList.add("quest")
         const space = document.createElement("h3")

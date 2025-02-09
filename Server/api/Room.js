@@ -167,7 +167,19 @@ const AnswerArr = [
     0
   ],
   [
+    "Inculare #nomino con un trapano acceso",
+    0
+  ],
+  [
     "I campi di cotone ripopolati",
+    0
+  ],
+  [
+    "Rendere #nomino uno schiavo sessuale",
+    0
+  ],
+  [
+    "Sposare #nomino con un furry",
     0
   ],
   [
