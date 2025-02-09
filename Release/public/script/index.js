@@ -12,7 +12,7 @@ let esplodi
 let alreadyconnected = false
 let lastp = -1
 let user
-let heartbeatInterval;
+let heartbeatWorker = new Worker("./woke.js");
 
 document.getElementById("inputname").value = getRandomNamea()
 const imgUserPath = (n) => {
@@ -87,9 +87,15 @@ const sendHeartbeat = () => {
     }
 })()
 
+heartbeatWorker.onmessage = (event) => {
+    if (event.data === "sendHeartbeat") {
+      sendHeartbeat();
+    }
+};  
+
 Server.on("connected",(data)=>{
     document.getElementById("offline").style.display = "none"
-    heartbeatInterval = setInterval(sendHeartbeat, 1000);
+    heartbeatWorker.postMessage("start");
     if(alreadyconnected)
     {
         Server.emit("reconnect",{id : user.unicid, oldid : localStorage.getItem("oldid")})
@@ -598,7 +604,7 @@ Server.on("reconnected",(data)=>{
 
 Server.on("disconnect",() => {
     document.getElementById("offline").style.display = "flex"
-    clearInterval(heartbeatInterval);
+    heartbeatWorker.postMessage("stop");
 });
 
 (() => {
