@@ -89,7 +89,7 @@ const sendHeartbeat = () => {
 
 Server.on("connected",(data)=>{
     document.getElementById("offline").style.display = "none"
-    heartbeatInterval = setInterval(sendHeartbeat, 5000);
+    heartbeatInterval = setInterval(sendHeartbeat, 1000);
     if(alreadyconnected)
     {
         Server.emit("reconnect",{id : user.unicid, oldid : localStorage.getItem("oldid")})
