@@ -279,7 +279,6 @@ webserver.on("connection",(socket) => {
                 user.heartbeat = Date.now()
             }
         }
-        socket.emit("heartbeat_ack");
     });
 
     socket.on("disconnect",() => {
@@ -327,7 +326,7 @@ setInterval(() => {
     const now = Date.now();
     Rooms.rooms.forEach(room => {
         room.users.forEach(user => {
-            if (now - user.heartbeat > 10000) 
+            if (now - user.heartbeat > 20000) 
             {
                 try
                 {

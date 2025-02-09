@@ -13,7 +13,7 @@ let alreadyconnected = false
 let lastp = -1
 let user
 let heartbeatInterval;
-let isServerAlive = true;
+
 document.getElementById("inputname").value = getRandomNamea()
 const imgUserPath = (n) => {
     return "./img/userimg/" + n + '.jpg'
@@ -27,10 +27,6 @@ const sendHeartbeat = () => {
     if (Server.connected) 
     {
         Server.emit("heartbeat");
-    } 
-    else 
-    {
-        isServerAlive = false;
     }
 };
 (() => {
@@ -92,7 +88,6 @@ const sendHeartbeat = () => {
 })()
 
 Server.on("connected",(data)=>{
-    isServerAlive = true
     document.getElementById("offline").style.display = "none"
     heartbeatInterval = setInterval(sendHeartbeat, 5000);
     if(alreadyconnected)
@@ -112,10 +107,6 @@ Server.on("connected",(data)=>{
         document.getElementById("load").style.display = "none"
         document.getElementById("home").style.display = "flex"
     },500)  
-});
-
-Server.on("heartbeat_ack", () => {
-    isServerAlive = true;
 });
 
 
@@ -608,7 +599,6 @@ Server.on("reconnected",(data)=>{
 Server.on("disconnect",() => {
     document.getElementById("offline").style.display = "flex"
     clearInterval(heartbeatInterval);
-    isServerAlive = false;
 });
 
 (() => {
