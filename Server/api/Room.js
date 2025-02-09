@@ -7,7 +7,23 @@ const AnswerArr = [
     0
   ],
   [
+    "Il culo fascista di mussolini",
+    0
+  ],
+  [
+    "Fare sesso con un nugget (persona senza braccia e gambe)",
+    0
+  ],
+  [
+    "Il famoso detto di maestro Oogway: 'Dove c'è un buco, c'è un obbiettivo'",
+    0
+  ],
+  [
     "GattoBoy e Geco",
+    0
+  ],
+  [
+    "Un furry caliente",
     0
   ],
   [
@@ -15,7 +31,7 @@ const AnswerArr = [
     0
   ],
   [
-    "Una triciclo a propulsione",
+    "Un triciclo a propulsione",
     0
   ],
   [
@@ -487,7 +503,7 @@ const AnswerArr = [
     0
   ],
   [
-    "L'amianto",
+    "L'amianto della nonna",
     0
   ],
   [
@@ -556,6 +572,22 @@ const AnswerArr = [
   ],
   [
     "Il tumore al seno",
+    0
+  ],
+  [
+    "Una massa tumorale",
+    0
+  ],
+  [
+    "Dichiarare guerra a Trump(oli)",
+    0
+  ],
+  [
+    "Odiare tutti i governi del pianeta",
+    0
+  ],
+  [
+    "Un Cancro al 7° stadio",
     0
   ],
   [
