@@ -12,7 +12,7 @@ let esplodi
 let alreadyconnected = false
 let lastp = -1
 let user
-let heartbeatWorker = new Worker("./woke.js");
+let heartbeatWorker = new Worker("woke.js");
 
 document.getElementById("inputname").value = getRandomNamea()
 const imgUserPath = (n) => {
