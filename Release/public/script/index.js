@@ -12,7 +12,7 @@ let esplodi
 let alreadyconnected = false
 let lastp = -1
 let user
-let heartbeatWorker = new Worker("woke.js");
+let heartbeatWorker = new Worker("hearthWorker.js");
 
 document.getElementById("inputname").value = getRandomNamea()
 const imgUserPath = (n) => {
@@ -94,7 +94,7 @@ heartbeatWorker.onmessage = (event) => {
 };  
 
 Server.on("connected",(data)=>{
-    document.getElementById("offline").style.display = "none"
+    document.getElementById("offline").style.display = "none";
     heartbeatWorker.postMessage("start");
     if(alreadyconnected)
     {
