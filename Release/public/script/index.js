@@ -12,23 +12,15 @@ let esplodi
 let alreadyconnected = false
 let lastp = -1
 let user
-let interval
-const startHeartbeat = () => {
-    if (!interval) {
-        interval = setInterval(() => {
-            if(Server.connected) 
-            {
-                Server.emit("heartbeat");
-            }
-        }, 1000);
+const worker = new Worker("heartbeatWorker.js");
+worker.onmessage = (e) => {
+    if (e.data == "heartbeat" && Server.connected) {
+        Server.emit("heartbeat");
     }
-}
-const stopHeartbeat = () => {
-    if (interval) {
-        clearInterval(interval);
-        interval = null;
-    }
-}
+};
+
+const startHeartbeat = () => worker.postMessage("start");
+const stopHeartbeat = () => worker.postMessage("stop");
 
 document.getElementById("inputname").value = getRandomNamea()
 const imgUserPath = (n) => {
@@ -118,8 +110,6 @@ Server.on("connected",(data)=>{
         document.getElementById("home").style.display = "flex"
     },500)  
 });
-
-
 
 /*Homepage*/
 (() => {
