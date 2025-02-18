@@ -196,9 +196,8 @@ webserver.on("connection",(socket) => {
                 webserver.to(socket.id).emit("NotPossibleUser","Die")
                 return
             }
-            console.log(op)
             room.users.forEach((user) => {
-                webserver.to(user.socketid).emit('whoWon', {user: user.toJSON(), winner: room.Asker.toJSON(), wincard : op.toJSON(), lastwinner: room.LastAsker.name})
+                webserver.to(user.socketid).emit('whoWon', {user: user.toJSON(), winner: room.Asker.toJSON(), wincard : op.map(card => card.toJSON()), lastwinner: room.LastAsker.name})
             });
         }
         catch(error)

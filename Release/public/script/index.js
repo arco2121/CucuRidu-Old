@@ -2,7 +2,6 @@
 const colors = ["#FED6E2", "#FFD2C1", "#FFF5B3", "#E9FFC1", "#C1FFF0", "#D6EBFE", "#DEC1FF"]
 const logoCount = 7
 let roomCode = ""
-let oldid = ""
 let userPfp = 1
 let GetAnsw
 let skibidi
@@ -102,13 +101,13 @@ Server.on("connected",(data)=>{
     startHeartbeat();
     if(alreadyconnected)
     {
-        Server.emit("reconnect",{id : user.unicid, oldid : localStorage.getItem("oldid")})
-        localStorage.setItem("oldid",data)
+        Server.emit("reconnect",{id : user.unicid, oldid : localStorage.getItem("CucuRidu_Proprety_OldId")})
+        localStorage.setItem("CucuRidu_Proprety_OldId",data)
         return
     }
-    localStorage.setItem("oldid",data)
+    localStorage.setItem("CucuRidu_Proprety_OldId",data)
     alreadyconnected = true
-    console.log("User : " + data)
+    console.log("Welcome to Cucu Ridu, Silly✨\n...\t...\nYou shouldn't be here😑")
     user = new User("name",data,0)
     setTimeout(()=>{
         document.getElementById("inputname").value = getRandomNamea()
@@ -154,11 +153,11 @@ Server.on("connected",(data)=>{
 document.getElementById("createRoom").addEventListener("click",()=>{
     document.getElementById("home").style.display = "none"
     document.getElementById("askname").style.display = "flex"
-    document.getElementById("inputname").value = localStorage.getItem("lastName") || getRandomNamea()
+    document.getElementById("inputname").value = localStorage.getItem("CucuRidu_Proprety_LastName") || getRandomNamea()
     const temp = ()=>{
         if(document.getElementById("inputname").value != "")
         {
-            localStorage.setItem("lastName",document.getElementById("inputname").value)
+            localStorage.setItem("CucuRidu_Proprety_LastName",document.getElementById("inputname").value)
             document.getElementById("chooseName").removeEventListener("click",temp)
             Server.emit("createRoom",{name : document.getElementById("inputname").value.toString(), img : userPfp})
         }
@@ -178,11 +177,11 @@ document.getElementById("joinRoom").addEventListener("click",()=>{
         {
             document.getElementById("askroomcode").style.display = "none"
             document.getElementById("askname").style.display = "flex"
-            document.getElementById("inputname").value = localStorage.getItem("lastName") || getRandomNamea()
+            document.getElementById("inputname").value = localStorage.getItem("CucuRidu_Proprety_LastName") || getRandomNamea()
             const temp = () => {
                 if(document.getElementById("inputname").value != "")
                 {
-                    localStorage.setItem("lastName",document.getElementById("inputname").value)
+                    localStorage.setItem("CucuRidu_Proprety_LastName",document.getElementById("inputname").value)
                     document.getElementById("chooseName").removeEventListener("click",temp)
                     Server.emit("joinRoom",{name : document.getElementById("inputname").value.toString(), roomId : document.getElementById("inputroomcode").value.toString().toUpperCase(),img : userPfp})
                 }
@@ -463,10 +462,27 @@ Server.on("whoWon",(data) => {
         document.getElementById("waitround").style.display = "none"
         document.getElementById("winround").style.display = "flex"
     }
-    document.getElementById("imgwon").appendChild(Card.FromJSON(data.wincard).toHTML("♥ Frase"))
+    const answers = data.wincard.map(dats => Card.FromJSON(dats))
+    let carf = quest.toHTML("♥ Frase")
+    for(let i = 0; i<answers.length;i++)
+    {
+        const y = quest.text.textContent
+        let u = ""
+        if(y.indexOf("_") == 0)
+        {
+            u = y.replace("_",answers[i].value)
+        }
+        else
+        {
+            u = y.replace("_",answers[i].value[0].toLowerCase() + answers[i].value.slice(1))
+        }
+        quest.text.innerText = u
+    }
+    document.getElementById("imgwon").appendChild(carf)
     document.getElementById("whowon").innerText = data.winner.name + "\nha vinto il round"
     document.getElementById("whomess").innerText = data.lastwinner + "\nha decretato il vincitor* di questo round"
     user = User.fromJSON(data.user)
+    carf = null
     if(user.IsAsking)
     {
         document.getElementById("restartRoom").style.display = "flex"
@@ -603,7 +619,6 @@ setInterval(()=>{
 Server.on("reconnected",(data)=>{ 
     user = User.fromJSON(data.user)
     roomCode = data.roomId
-    console.log("User : Reconnected")
 })
 
 Server.on("disconnect",() => {
