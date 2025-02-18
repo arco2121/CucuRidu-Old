@@ -170,10 +170,6 @@ document.getElementById("createRoom").addEventListener("click",()=>{
     document.getElementById("chooseName").addEventListener("click", temp)
 })
 
-setInterval(()=>{
-    document.getElementById("inputroomcode").value = document.getElementById("inputroomcode").value.toUpperCase()
-},1)
-
 document.getElementById("joinRoom").addEventListener("click",()=>{
     document.getElementById("home").style.display = "none"
     document.getElementById("askroomcode").style.display = "flex";
