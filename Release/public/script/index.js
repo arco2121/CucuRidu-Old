@@ -12,7 +12,23 @@ let esplodi
 let alreadyconnected = false
 let lastp = -1
 let user
-let heartbeatWorker = new Worker("hearthWorker.js");
+let interval
+const startHeartbeat = () => {
+    if (!interval) {
+        interval = setInterval(() => {
+            if(Server.connected) 
+            {
+                Server.emit("heartbeat");
+            }
+        }, 1000);
+    }
+}
+const stopHeartbeat = () => {
+    if (interval) {
+        clearInterval(interval);
+        interval = null;
+    }
+}
 
 document.getElementById("inputname").value = getRandomNamea()
 const imgUserPath = (n) => {
@@ -23,12 +39,6 @@ const Server = io("https://cucu-ridu.onrender.com",{
     reconnectionDelay: 200,
     reconnectionDelayMax: 220, 
 });
-const sendHeartbeat = () => {
-    if (Server.connected) 
-    {
-        Server.emit("heartbeat");
-    }
-};
 (() => {
     const color = colors[Math.floor(Math.random() * (colors.length))]
     const logoPath = "./img/logoimg/" + Math.floor(Math.random() * (logoCount - 1) + 1) + ".png"
@@ -87,15 +97,9 @@ const sendHeartbeat = () => {
     }
 })()
 
-heartbeatWorker.onmessage = (event) => {
-    if (event.data === "sendHeartbeat") {
-      sendHeartbeat();
-    }
-};  
-
 Server.on("connected",(data)=>{
     document.getElementById("offline").style.display = "none";
-    heartbeatWorker.postMessage("start");
+    startHeartbeat();
     if(alreadyconnected)
     {
         Server.emit("reconnect",{id : user.unicid, oldid : localStorage.getItem("oldid")})
@@ -604,7 +608,7 @@ Server.on("reconnected",(data)=>{
 
 Server.on("disconnect",() => {
     document.getElementById("offline").style.display = "flex"
-    heartbeatWorker.postMessage("stop");
+    stopHeartbeat()
 });
 
 (() => {
