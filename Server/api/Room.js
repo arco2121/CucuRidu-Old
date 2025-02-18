@@ -1,4 +1,3 @@
-
 const {Deck,Card} = require('./Deck')
 const {Guest, Admin} = require('./User')
 //Tags : #nomino,
@@ -2884,22 +2883,23 @@ class Room
           const user = this.FindUser(idunic)
           if(!user)
           {
-            return false
+            return null
           }
           user.point += points
           this.Asker.IsAsking = false
           this.LastAsker = this.Asker
           user.IsAsking = true
           this.Asker = user
+          const card = this.CurrentRound.answers[this.CurrentRound.answers.findIndex(ele => ele[0].unicid == idunic)][1]
           this.CurrentRound = {
               count: 0,
               question: null,
               answers: [],
               isRound: false,
           }
-          return true
+          return card
         }
-        return false
+        return null
     }
 
     ResultGame()

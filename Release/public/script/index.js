@@ -463,7 +463,7 @@ Server.on("whoWon",(data) => {
         document.getElementById("waitround").style.display = "none"
         document.getElementById("winround").style.display = "flex"
     }
-    document.getElementById("imgwon").src = imgUserPath(data.winner.img)
+    document.getElementById("imgwon").appendChild(Card.FromJSON(data.wincard).toHTML("♥ Frase"))
     document.getElementById("whowon").innerText = data.winner.name + "\nha vinto il round"
     document.getElementById("whomess").innerText = data.lastwinner + "\nha decretato il vincitor* di questo round"
     user = User.fromJSON(data.user)
