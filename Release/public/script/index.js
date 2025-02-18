@@ -2,6 +2,7 @@
 const colors = ["#FED6E2", "#FFD2C1", "#FFF5B3", "#E9FFC1", "#C1FFF0", "#D6EBFE", "#DEC1FF"]
 const logoCount = 7
 let roomCode = ""
+let oldid = ""
 let userPfp = 1
 let GetAnsw
 let skibidi
@@ -101,13 +102,13 @@ Server.on("connected",(data)=>{
     startHeartbeat();
     if(alreadyconnected)
     {
-        Server.emit("reconnect",{id : user.unicid, oldid : localStorage.getItem("CucuRidu_Proprety_OldId")})
-        localStorage.setItem("CucuRidu_Proprety_OldId",data)
+        Server.emit("reconnect",{id : user.unicid, oldid : localStorage.getItem("CucuRidu_Proprety_LastId")})
+        localStorage.setItem("CucuRidu_Proprety_LastId",data)
         return
     }
-    localStorage.setItem("CucuRidu_Proprety_OldId",data)
+    localStorage.setItem("CucuRidu_Proprety_LastId",data)
     alreadyconnected = true
-    console.log("Welcome to Cucu Ridu, Silly✨\n...\t...\nYou shouldn't be here😑")
+    console.log("Welcome to Cucu Ridu, Silly✨\n...\t...\n\nYou shouldn't be here😑")
     user = new User("name",data,0)
     setTimeout(()=>{
         document.getElementById("inputname").value = getRandomNamea()
@@ -168,6 +169,10 @@ document.getElementById("createRoom").addEventListener("click",()=>{
     }
     document.getElementById("chooseName").addEventListener("click", temp)
 })
+
+setInterval(()=>{
+    document.getElementById("inputroomcode").value = document.getElementById("inputroomcode").value.toUpperCase()
+},1)
 
 document.getElementById("joinRoom").addEventListener("click",()=>{
     document.getElementById("home").style.display = "none"
