@@ -176,6 +176,31 @@ webserver.on("connection",(socket) => {
         }
     })
     
+    socket.on("changeView",(data) => {
+        try
+        {
+            const room = Rooms.FindRoomByUser(data.id)
+            if(!room)
+            {
+                webserver.to(socket.id).emit("error", "Not exist")
+                return
+            }
+            if(data.id == room.Asker.unicid)
+            {
+                room.users.forEach(u => {
+                    if(u.unicid != data.id)
+                    {
+                        webserver.to(u.socketid).emit("changedView",data.in)
+                    }
+                })
+            }
+        }
+        catch(error)
+        {
+            console.log(error)
+        }
+    })
+
     socket.on("endRound", (data) => {
         try
         {

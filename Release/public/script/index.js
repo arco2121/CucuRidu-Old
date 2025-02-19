@@ -281,6 +281,9 @@ Server.on("questionRe",(data)=>{
     document.getElementById("pointsa").style.display = "flex"
     const card = Card.FromJSON(data.question)
     quest = card
+    GetAnsw = setInterval(()=>{
+        Server.emit("getAnswers",{id : user.unicid})
+    },backtime)
     if(user.IsAsking)
     {
         while(document.getElementById("cardcontainer").firstChild)
@@ -288,9 +291,6 @@ Server.on("questionRe",(data)=>{
             document.getElementById("cardcontainer").removeChild(document.getElementById("cardcontainer").firstChild)
         }
         document.getElementById("cardcontainer").appendChild(card.toHTML("♥ Frase"))
-        GetAnsw = setInterval(()=>{
-            Server.emit("getAnswers",{id : user.unicid})
-        },backtime)
         card.spacehtml.innerText = "0/0"
         skibidi = setInterval(()=>{
             Server.emit("answersRoom",{id : user.unicid})
@@ -413,33 +413,49 @@ Server.on("gettedAnswers",(data) => {
         }
     }
     BlankSpace()
-    document.getElementById("submitta").disabled = false
-    document.getElementById("askerview").style.display = "none"
-    document.getElementById("choosewinner").style.display = "flex"
-    document.getElementById("ava").addEventListener("click",()=>{
-        if(j+1 > answers.length - 1)
-            return
-        j++
-        quest.text.innerText = quest.value
-        BlankSpace()
-        setTimeout(()=>{
-            document.getElementById("submitta").disabled = false
-        },200)
-    })
-    document.getElementById("indi").addEventListener("click",()=>{
-        if(j-1 < 0)
-            return
-        j--
-        quest.text.innerText = quest.value
-        BlankSpace()
-        setTimeout(()=>{
-            document.getElementById("submitta").disabled = false
-        },200)
-    })
-    document.getElementById("submitta").addEventListener("click", () => {
-        document.getElementById("submitta").disabled = true
-        Server.emit("endRound",{id : user.unicid, winid : answers[j][0].unicid})
-    })
+    if(user.IsAsking)
+    {
+        document.getElementById("submitta").style.display = "flex"
+        document.getElementById("tasts").style.display = "flex"
+        document.getElementById("submitta").disabled = false
+        document.getElementById("askerview").style.display = "none"
+        document.getElementById("choosewinner").style.display = "flex"
+        document.getElementById("ava").addEventListener("click",()=>{
+            if(j+1 > answers.length - 1)
+                return
+            j++
+            Server.emit("changeView",{in : j, id : user.unicid})
+            quest.text.innerText = quest.value
+            BlankSpace()
+            setTimeout(()=>{
+                document.getElementById("submitta").disabled = false
+            },200)
+        })
+        document.getElementById("indi").addEventListener("click",()=>{
+            if(j-1 < 0)
+                return
+            j--
+            Server.emit("changeView",{in : j, id : user.unicid})
+            quest.text.innerText = quest.value
+            BlankSpace()
+            setTimeout(()=>{
+                document.getElementById("submitta").disabled = false
+            },200)
+        })
+        document.getElementById("submitta").addEventListener("click", () => {
+            document.getElementById("submitta").disabled = true
+            Server.emit("endRound",{id : user.unicid, winid : answers[j][0].unicid})
+        })
+    }
+    else
+    {
+         document.getElementById("submitta").style.display = "none"
+         document.getElementById("tasts").style.display = "none"
+         Server.on("changedView",(iop)=>{
+            j = iop;
+            BlankSpace();
+         })
+    }
 })
 
 Server.on("whoWon",(data) => {
