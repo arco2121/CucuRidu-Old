@@ -628,3 +628,7 @@ Server.on("disconnect",() => {
     };
     window.addEventListener("beforeunload", endSession);
 })();
+
+setInterval(()=>{
+    document.getElementById("inputroomcode").value != "" ? document.getElementById("inputroomcode").style="" : document.getElementById("inputroomcode").style="text-transform: uppercase;";
+},150)
