@@ -7,12 +7,12 @@ let userPfp = 1
 let GetAnsw
 let skibidi
 let backtime = 500
-let quest
 let esplodi
 let alreadyconnected = false
 let lastp = -1
 let user;
 let interval
+let quest
 const startHeartbeat = () => {
     if (!interval) {
         interval = setInterval(() => {
@@ -401,21 +401,23 @@ Server.on("gettedAnswers",(data) => {
     }
     document.getElementById("modcardcontainer").appendChild(quest.toHTML("♥ Frase",true))
     const BlankSpace = () => {
-        document.getElementById("nquest").innerText = j+1 + "/" + answers.length
+        const h = j
+        document.getElementById("nquest").innerText = h+1 + "/" + answers.length
         document.getElementById("submitta").disabled = true
-        for(let i = 0; i<answers[j][1].length;i++)
+        for(let i = 0; i<answers[h][1].length;i++)
         {
             const y = quest.text.textContent
-            let u = ""
+            let uds = ""
             if(y.indexOf("_") == 0)
             {
-                u = y.replace("_",answers[j][1][i].value)
+                uds = y.replace("_",answers[h][1][i].value)
             }
             else
             {
-                u = y.replace("_",answers[j][1][i].value[0].toLowerCase() + answers[j][1][i].value.slice(1))
+                uds = y.replace("_",answers[h][1][i].value[0].toLowerCase() + answers[h][1][i].value.slice(1))
             }
-            quest.text.innerText = u
+            quest.text.innerText = uds
+            uds = ""
         }
     }
     BlankSpace()
@@ -655,4 +657,4 @@ Server.on("disconnect",() => {
 
 setInterval(()=>{
     document.getElementById("inputroomcode").value == "" ? document.getElementById("inputroomcode").style="" : document.getElementById("inputroomcode").style="text-transform: uppercase;";
-},150)
+},0)
