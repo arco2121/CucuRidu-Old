@@ -11,16 +11,24 @@ let quest
 let esplodi
 let alreadyconnected = false
 let lastp = -1
-let user
-const worker = new Worker("heartbeatWorker.js");
-worker.onmessage = (e) => {
-    if (e.data == "heartbeat" && Server.connected) {
-        Server.emit("heartbeat");
+let user;
+let interval
+const startHeartbeat = () => {
+    if (!interval) {
+        interval = setInterval(() => {
+            if(Server.connected) 
+            {
+                Server.emit("heartbeat");
+            }
+        }, 1000);
     }
-};
-
-const startHeartbeat = () => worker.postMessage("start");
-const stopHeartbeat = () => worker.postMessage("stop");
+}
+const stopHeartbeat = () => {
+    if (interval) {
+        clearInterval(interval);
+        interval = null;
+    }
+}
 
 document.getElementById("inputname").value = getRandomNamea()
 const imgUserPath = (n) => {
