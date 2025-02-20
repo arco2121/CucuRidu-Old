@@ -310,6 +310,8 @@ input[type="text"]:active
 .nodo
 {
     width: 100%;
+    min-height: auto;
+    min-width: auto;
 }
 .semi
 {

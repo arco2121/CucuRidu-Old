@@ -654,5 +654,5 @@ Server.on("disconnect",() => {
 })();
 
 setInterval(()=>{
-    document.getElementById("inputroomcode").value != "" ? document.getElementById("inputroomcode").style="" : document.getElementById("inputroomcode").style="text-transform: uppercase;";
+    document.getElementById("inputroomcode").value == "" ? document.getElementById("inputroomcode").style="" : document.getElementById("inputroomcode").style="text-transform: uppercase;";
 },150)
