@@ -20,7 +20,7 @@ const startHeartbeat = () => {
             {
                 Server.emit("heartbeat");
             }
-        }, 1000);
+        }, 2000);
     }
 }
 const stopHeartbeat = () => {
@@ -36,8 +36,6 @@ const imgUserPath = (n) => {
 }
 const Server = io("https://cucu-ridu.onrender.com",{
     reconnection: true,
-    reconnectionDelay: 200,
-    reconnectionDelayMax: 220, 
 });
 (() => {
     const color = colors[Math.floor(Math.random() * (colors.length))]
@@ -457,8 +455,10 @@ Server.on("gettedAnswers",(data) => {
     }
     else
     {
+         document.getElementById("waitround").style.display = "none"
          document.getElementById("submitta").style.display = "none"
          document.getElementById("tasts").style.display = "none"
+         document.getElementById("choosewinner").style.display = "flex"
          Server.on("changedView",(iop)=>{
             j = iop;
             BlankSpace();

@@ -375,7 +375,7 @@ setInterval(() => {
             }
         })
     })
-},1000)
+},2500)
 
 server.listen(port, () => {
     console.log("Server : http://localhost:" + port)
