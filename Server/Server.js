@@ -165,12 +165,10 @@ webserver.on("connection",(socket) => {
                 webserver.to(socket.id).emit("answersYet", "Not now")
                 return
             }
-            room.users.forEach(u => {
-                webserver.to(u.socketid).emit('gettedAnswers', {answers : result.map((resu) => [
-                    resu[0].toJSON(),
-                    resu[1].map((card) => card.toJSON())
-                ])})
-            })
+            webserver.to(socket.id).emit('gettedAnswers', {answers : result.map((resu) => [
+                resu[0].toJSON(),
+                resu[1].map((card) => card.toJSON())
+            ])})
         }
         catch(error)
         {

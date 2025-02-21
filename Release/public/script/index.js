@@ -461,9 +461,9 @@ Server.on("gettedAnswers",(data) => {
          document.getElementById("submitta").style.display = "none"
          document.getElementById("tasts").style.display = "none"
          document.getElementById("choosewinner").style.display = "flex"
-         console.log(answers)
          Server.on("changedView",(iop)=>{
             j = iop;
+            quest.text.innerText = quest.value
             BlankSpace();
          })
     }
