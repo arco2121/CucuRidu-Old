@@ -1,3 +1,4 @@
+"use strict";
 /*App StartUp*/
 const colors = ["#FED6E2", "#FFD2C1", "#FFF5B3", "#E9FFC1", "#C1FFF0", "#D6EBFE", "#DEC1FF"]
 const logoCount = 7
@@ -660,3 +661,7 @@ Server.on("disconnect",() => {
 setInterval(()=>{
     document.getElementById("inputroomcode").value == "" ? document.getElementById("inputroomcode").style="" : document.getElementById("inputroomcode").style="text-transform: uppercase;";
 },0)
+
+document.getElementById("segnala").addEventListener("click",()=>{
+    window.location.href = "mailto:devcolombaramarco@gmail.com?subject=Report a problem | Cucu Ridu&body=Problem : "
+})
