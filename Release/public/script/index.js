@@ -13,7 +13,7 @@ let alreadyconnected = false
 let lastp = -1
 let user;
 let interval
-let quest = new Card()
+let quest
 let lepri
 const startHeartbeat = () => {
     if (!interval) {
@@ -106,6 +106,7 @@ Server.on("connected",(data)=>{
         localStorage.setItem("CucuRidu_Proprety_LastId",data)
         return
     }
+    document.getElementById("wel").play()
     localStorage.setItem("CucuRidu_Proprety_LastId",data)
     alreadyconnected = true
     console.log("Welcome to Cucu Ridu, Silly✨\n...\t...\n\nYou shouldn't be here😑")
@@ -506,7 +507,7 @@ Server.on("whoWon",(data) => {
     document.getElementById("whowon").innerText = data.winner.name + "\nha vinto il round"
     document.getElementById("whomess").innerText = data.lastwinner + "\nha decretato il vincitor* di questo round"
     const answers = data.wincard.map(dats => Card.FromJSON(dats))
-    let carf = quest.toHTML("♥ Frase",false,false,imgUserPath(data.winner.img))
+    let carf = quest.toHTML("♥ Frase")
     for(let i = 0; i<answers.length;i++)
     {
         const y = quest.text.textContent
@@ -699,4 +700,12 @@ setInterval(()=>{
 
 document.getElementById("segnala").addEventListener("click",()=>{
     window.location.href = "mailto:devcolombaramarco@gmail.com?subject=Report a problem | Cucu Ridu&body=Problem : "
-})})();
+})
+
+document.querySelectorAll("button").forEach((ele) => {
+    ele.addEventListener("click",()=>{
+        document.getElementById("but" + Math.floor(Math.random() * 7 + 1) - 1).play()
+    })
+})
+
+})();

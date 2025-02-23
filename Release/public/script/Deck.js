@@ -7,7 +7,7 @@ class Card
         this.space = space
     }
 
-    toHTML(title,shownumber,answer,img)
+    toHTML(title,shownumber,answer)
     {
         const card = document.createElement("div")
         card.classList.add("card")
@@ -39,13 +39,6 @@ class Card
         if(shownumber != true && shownumber == null)
         {
             card.appendChild(div2)
-        }
-        if(img != null)
-        {
-            card.style.backgroundImage = "url('" + img + "');"
-            card.style.backgroundPosition = "center"
-            card.style.backgroundSize = "cover";
-            card.classList.add("overlay");
         }
         this.spacehtml = space
         this.text = text
