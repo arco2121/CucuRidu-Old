@@ -109,7 +109,7 @@ Server.on("connected",(data)=>{
     alreadyconnected = true
     console.log("Welcome to Cucu Ridu, Silly✨\n...\t...\n\nYou shouldn't be here😑")
     user = new User("name",data,0)
-    document.getElementById("ghj").innerText = "Cucu Ridu✨\t...now click the cat"
+    document.getElementById("ghj").innerText = "...now click the cat"
     document.getElementById("oggy").addEventListener("click",()=>{
         document.getElementById("wel").play()
         localStorage.setItem("CucuRidu_Proprety_LastId",data)
@@ -691,7 +691,9 @@ document.getElementById("segnala").addEventListener("click",()=>{
 
 document.querySelectorAll("button").forEach((ele) => {
     ele.addEventListener("click",()=>{
-        document.getElementById("but" + Math.floor((Math.random() * 7 + 1) - 1)).play()
+        const u = Math.floor(Math.random() * (7 - 1) + 1)
+        console.log(u)
+        document.getElementById("but" + u).play()
     })
 })
 
