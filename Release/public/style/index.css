@@ -470,6 +470,10 @@ input[type="text"]:active
     background-color: var(--revcolor);
     width: 150px;
 }
+#oggy:active
+{
+    scale: 0.9;
+}
 #whowon
 {
     width: 90%;

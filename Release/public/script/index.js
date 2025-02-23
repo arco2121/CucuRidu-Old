@@ -106,20 +106,19 @@ Server.on("connected",(data)=>{
         localStorage.setItem("CucuRidu_Proprety_LastId",data)
         return
     }
-    document.documentElement.addEventListener("click",()=>{
-        document.getElementById("wel").play()
-    },{once : true})
-    localStorage.setItem("CucuRidu_Proprety_LastId",data)
     alreadyconnected = true
     console.log("Welcome to Cucu Ridu, Silly✨\n...\t...\n\nYou shouldn't be here😑")
     user = new User("name",data,0)
-    setTimeout(()=>{
+    document.getElementById("ghj").innerText = "Cucu Ridu✨\t...now click the cat"
+    document.getElementById("oggy").addEventListener("click",()=>{
+        document.getElementById("wel").play()
+        localStorage.setItem("CucuRidu_Proprety_LastId",data)
         document.getElementById("inputname").value = getRandomNamea()
         userPfp = getRandomPfp()
         document.getElementById("imguserk").src = imgUserPath(userPfp)
         document.getElementById("load").style.display = "none"
         document.getElementById("home").style.display = "flex"
-    },500)  
+    })
 });
 
 /*Homepage*/
@@ -686,27 +685,13 @@ setInterval(()=>{
     document.getElementById("inputroomcode").value == "" ? document.getElementById("inputroomcode").style="" : document.getElementById("inputroomcode").style="text-transform: uppercase;";
 },0)
 
-setInterval(()=>{
-    let oki = true
-    if(!Server.connected && oki)
-    {
-        document.getElementById("offline").style.display = "flex"
-        stopHeartbeat()
-        oki = false
-    }
-    else(!oki && Server.connected)
-    {
-        oki = true
-    }
-},0)
-
 document.getElementById("segnala").addEventListener("click",()=>{
     window.location.href = "mailto:devcolombaramarco@gmail.com?subject=Report a problem | Cucu Ridu&body=Problem : "
 })
 
 document.querySelectorAll("button").forEach((ele) => {
     ele.addEventListener("click",()=>{
-        document.getElementById("but" + Math.floor(Math.random() * 7 + 1) - 1).play()
+        document.getElementById("but" + Math.floor((Math.random() * 7 + 1) - 1)).play()
     })
 })
 
