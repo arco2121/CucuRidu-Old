@@ -1,4 +1,4 @@
-"use strict";
+(() => {"use strict";
 /*App StartUp*/
 const colors = ["#FED6E2", "#FFD2C1", "#FFF5B3", "#E9FFC1", "#C1FFF0", "#D6EBFE", "#DEC1FF"]
 const logoCount = 7
@@ -14,6 +14,7 @@ let lastp = -1
 let user;
 let interval
 let quest
+let lepri
 const startHeartbeat = () => {
     if (!interval) {
         interval = setInterval(() => {
@@ -426,31 +427,10 @@ Server.on("gettedAnswers",(data) => {
     {
         document.getElementById("submitta").style.display = "flex"
         document.getElementById("tasts").style.display = "flex"
+        document.getElementById("submitta").innerText = "Conferma"
         document.getElementById("submitta").disabled = false
         document.getElementById("askerview").style.display = "none"
         document.getElementById("choosewinner").style.display = "flex"
-        document.getElementById("ava").addEventListener("click",()=>{
-            if(j+1 > answers.length - 1)
-                return
-            j++
-            Server.emit("changeView",{in : j, id : user.unicid})
-            quest.text.innerText = quest.value
-            BlankSpace()
-            setTimeout(()=>{
-                document.getElementById("submitta").disabled = false
-            },200)
-        })
-        document.getElementById("indi").addEventListener("click",()=>{
-            if(j-1 < 0)
-                return
-            j--
-            Server.emit("changeView",{in : j, id : user.unicid})
-            quest.text.innerText = quest.value
-            BlankSpace()
-            setTimeout(()=>{
-                document.getElementById("submitta").disabled = false
-            },200)
-        })
         document.getElementById("submitta").addEventListener("click", () => {
             document.getElementById("submitta").disabled = true
             Server.emit("endRound",{id : user.unicid, winid : answers[j][0].unicid})
@@ -459,18 +439,60 @@ Server.on("gettedAnswers",(data) => {
     else
     {
          document.getElementById("waitround").style.display = "none"
-         document.getElementById("submitta").style.display = "none"
-         document.getElementById("tasts").style.display = "none"
+         document.getElementById("submitta").style.display = "flex"
+         document.getElementById("tasts").style.display = "flex"
+         document.getElementById("submitta").disabled = false
          document.getElementById("choosewinner").style.display = "flex"
+         let dyna = false
          Server.on("changedView",(iop)=>{
-            j = iop;
-            quest.text.innerText = quest.value
-            BlankSpace();
+           if(dyna)
+           {
+                j = iop;
+                quest.text.innerText = quest.value
+                BlankSpace();
+           }
          })
+         document.getElementById("submitta").addEventListener("click", () => {
+            dyna = !dyna
+            document.getElementById("submitta").disabled = false
+        })
+        lepri = setInterval(()=>{
+            if(dyna)
+            {
+                document.getElementById("submitta").innerText = "Dinamico"
+            }
+            else
+            {
+                document.getElementById("submitta").innerText = "Manuale"
+            }
+        })
     }
+    document.getElementById("ava").addEventListener("click",()=>{
+        if(j+1 > answers.length - 1)
+            return
+        j++
+        if(user.IsAsking) Server.emit("changeView",{in : j, id : user.unicid})
+        quest.text.innerText = quest.value
+        BlankSpace()
+        setTimeout(()=>{
+            document.getElementById("submitta").disabled = false
+        },200)
+    })
+    document.getElementById("indi").addEventListener("click",()=>{
+        if(j-1 < 0)
+            return
+        j--
+        if(user.IsAsking) Server.emit("changeView",{in : j, id : user.unicid})
+        quest.text.innerText = quest.value
+        BlankSpace()
+        setTimeout(()=>{
+            document.getElementById("submitta").disabled = false
+        },200)
+    })
 })
 
 Server.on("whoWon",(data) => {
+    clearInterval(lepri)
     if(user.IsAsking)
     {
         document.getElementById("choosewinner").style.display = "none"
@@ -482,23 +504,7 @@ Server.on("whoWon",(data) => {
         document.getElementById("waitround").style.display = "none"
         document.getElementById("winround").style.display = "flex"
     }
-    const answers = data.wincard.map(dats => Card.FromJSON(dats))
-    let carf = quest.toHTML("♥ Frase")
-    for(let i = 0; i<answers.length;i++)
-    {
-        const y = quest.text.textContent
-        let u = ""
-        if(y.indexOf("_") == 0)
-        {
-            u = y.replace("_",answers[i].value)
-        }
-        else
-        {
-            u = y.replace("_",answers[i].value[0].toLowerCase() + answers[i].value.slice(1))
-        }
-        quest.text.innerText = u
-    }
-    document.getElementById("imgwon").appendChild(carf)
+    document.getElementById("imgwon").src = imgUserPath(data.winner.img)
     document.getElementById("whowon").innerText = data.winner.name + "\nha vinto il round"
     document.getElementById("whomess").innerText = data.lastwinner + "\nha decretato il vincitor* di questo round"
     user = User.fromJSON(data.user)
@@ -664,4 +670,4 @@ setInterval(()=>{
 
 document.getElementById("segnala").addEventListener("click",()=>{
     window.location.href = "mailto:devcolombaramarco@gmail.com?subject=Report a problem | Cucu Ridu&body=Problem : "
-})
+})})();

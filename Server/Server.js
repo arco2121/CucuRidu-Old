@@ -222,7 +222,7 @@ webserver.on("connection",(socket) => {
                 return
             }
             room.users.forEach((user) => {
-                webserver.to(user.socketid).emit('whoWon', {user: user.toJSON(), winner: room.Asker.toJSON(), wincard : op.map(card => card.toJSON()), lastwinner: room.LastAsker.name})
+                webserver.to(user.socketid).emit('whoWon', {user: user.toJSON(), winner: room.Asker.toJSON(), lastwinner: room.LastAsker.name})
             });
         }
         catch(error)
