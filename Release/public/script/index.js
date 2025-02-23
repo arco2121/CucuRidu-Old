@@ -106,7 +106,9 @@ Server.on("connected",(data)=>{
         localStorage.setItem("CucuRidu_Proprety_LastId",data)
         return
     }
-    document.getElementById("wel").play()
+    document.documentElement.addEventListener("click",()=>{
+        document.getElementById("wel").play()
+    },{once : true})
     localStorage.setItem("CucuRidu_Proprety_LastId",data)
     alreadyconnected = true
     console.log("Welcome to Cucu Ridu, Silly✨\n...\t...\n\nYou shouldn't be here😑")
