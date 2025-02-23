@@ -13,7 +13,7 @@ let alreadyconnected = false
 let lastp = -1
 let user;
 let interval
-let quest
+let quest = new Card()
 let lepri
 const startHeartbeat = () => {
     if (!interval) {
@@ -499,10 +499,31 @@ Server.on("whoWon",(data) => {
     document.getElementById("choosewinner").style.display = "none"
     document.getElementById("waitround").style.display = "none"
     document.getElementById("winround").style.display = "flex"
-    document.getElementById("imgwon").src = imgUserPath(data.winner.img)
+    while(document.getElementById("imgwon").firstChild)
+    {
+        document.getElementById("imgwon").removeChild(document.getElementById("imgwon").firstChild)
+    }
     document.getElementById("whowon").innerText = data.winner.name + "\nha vinto il round"
     document.getElementById("whomess").innerText = data.lastwinner + "\nha decretato il vincitor* di questo round"
+    const answers = data.wincard.map(dats => Card.FromJSON(dats))
+    let carf = quest.toHTML("♥ Frase",false,false,imgUserPath(data.winner.img))
+    for(let i = 0; i<answers.length;i++)
+    {
+        const y = quest.text.textContent
+        let u = ""
+        if(y.indexOf("_") == 0)
+        {
+            u = y.replace("_",answers[i].value)
+        }
+        else
+        {
+            u = y.replace("_",answers[i].value[0].toLowerCase() + answers[i].value.slice(1))
+        }
+        quest.text.innerText = u
+    }
+    document.getElementById("imgwon").appendChild(carf)
     user = User.fromJSON(data.user)
+    carf = null
     if(user.IsAsking)
     {
         document.getElementById("restartRoom").style.display = "flex"

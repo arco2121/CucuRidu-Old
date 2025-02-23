@@ -391,6 +391,16 @@ input[type="text"]:active
     background: var(--color);
     transition: all 150ms ease;
 }
+.overlay::after
+{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
 .baka:active
 {
     scale: 0.9;
