@@ -450,6 +450,7 @@ Server.on("gettedAnswers",(data) => {
                 j = iop;
                 quest.text.innerText = quest.value
                 BlankSpace();
+                document.getElementById("submitta").disabled = false
            }
          })
          document.getElementById("submitta").addEventListener("click", () => {
@@ -471,7 +472,8 @@ Server.on("gettedAnswers",(data) => {
         if(j+1 > answers.length - 1)
             return
         j++
-        if(user.IsAsking) Server.emit("changeView",{in : j, id : user.unicid})
+        if(user.IsAsking) 
+            Server.emit("changeView",{in : j, id : user.unicid})
         quest.text.innerText = quest.value
         BlankSpace()
         setTimeout(()=>{
@@ -482,7 +484,8 @@ Server.on("gettedAnswers",(data) => {
         if(j-1 < 0)
             return
         j--
-        if(user.IsAsking) Server.emit("changeView",{in : j, id : user.unicid})
+        if(user.IsAsking) 
+            Server.emit("changeView",{in : j, id : user.unicid})
         quest.text.innerText = quest.value
         BlankSpace()
         setTimeout(()=>{
@@ -493,22 +496,13 @@ Server.on("gettedAnswers",(data) => {
 
 Server.on("whoWon",(data) => {
     clearInterval(lepri)
-    if(user.IsAsking)
-    {
-        document.getElementById("choosewinner").style.display = "none"
-        document.getElementById("winround").style.display = "flex"
-    }
-    else
-    {
-        document.getElementById("choosewinner").style.display = "none"
-        document.getElementById("waitround").style.display = "none"
-        document.getElementById("winround").style.display = "flex"
-    }
+    document.getElementById("choosewinner").style.display = "none"
+    document.getElementById("waitround").style.display = "none"
+    document.getElementById("winround").style.display = "flex"
     document.getElementById("imgwon").src = imgUserPath(data.winner.img)
     document.getElementById("whowon").innerText = data.winner.name + "\nha vinto il round"
     document.getElementById("whomess").innerText = data.lastwinner + "\nha decretato il vincitor* di questo round"
     user = User.fromJSON(data.user)
-    carf = null
     if(user.IsAsking)
     {
         document.getElementById("restartRoom").style.display = "flex"
@@ -666,6 +660,20 @@ Server.on("disconnect",() => {
 
 setInterval(()=>{
     document.getElementById("inputroomcode").value == "" ? document.getElementById("inputroomcode").style="" : document.getElementById("inputroomcode").style="text-transform: uppercase;";
+},0)
+
+setInterval(()=>{
+    let oki = true
+    if(!Server.connected && oki)
+    {
+        document.getElementById("offline").style.display = "flex"
+        stopHeartbeat()
+        oki = false
+    }
+    else(!oki && Server.connected)
+    {
+        oki = true
+    }
 },0)
 
 document.getElementById("segnala").addEventListener("click",()=>{
