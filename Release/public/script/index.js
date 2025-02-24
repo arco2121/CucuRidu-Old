@@ -691,7 +691,7 @@ document.getElementById("segnala").addEventListener("click",()=>{
 
 document.querySelectorAll("button").forEach((ele) => {
     ele.addEventListener("click",()=>{
-        const u = Math.floor(Math.random() * (7 - 1) + 1)
+        const u = Math.floor(Math.random() * (14 - 1) + 1)
         document.getElementById("but" + u).play()
     })
 })
