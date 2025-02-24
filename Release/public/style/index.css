@@ -7,8 +7,8 @@
     font-family: "Sour Gummy", sans-serif;
     font-optical-sizing: auto;
     font-variation-settings:
-      "wdth" 101.5;
-    transition: all ease 0.3s;
+      "width" 101.5;
+    transition: all ease 0.2s;
     overflow: hidden;
 }
 *::-webkit-scrollbar
@@ -473,6 +473,12 @@ input[type="text"]:active
 #oggy:active
 {
     scale: 0.9;
+}
+#set
+{
+    display: none;
+    z-index: 2;
+    animation: win 0.2s ;
 }
 #whowon
 {
