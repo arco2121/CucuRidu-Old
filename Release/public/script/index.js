@@ -41,8 +41,11 @@ document.getElementById("inputname").value = getRandomNamea()
 const imgUserPath = (n) => {
     return "./img/userimg/" + n + '.jpg'
 }
-const Server = io("https://cucu-ridu.onrender.com",{
-    reconnection: true,
+let Server;
+window.addEventListener("load",()=>{
+    Server = io("https://cucu-ridu.onrender.com",{
+        reconnection: true,
+    });
 });
 (() => {
     const color = colors[Math.floor(Math.random() * (colors.length))]
