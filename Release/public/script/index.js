@@ -116,8 +116,7 @@ Server.on("connected",(data)=>{
     user = new User("name",data,0)
     document.getElementById("ghj").innerText = "...now click the cat"
     document.getElementById("oggy").addEventListener("click",()=>{
-        if(localStorage.getItem("CucuRidu_Proprety_Sound"))
-            document.getElementById("wel").play()
+        document.getElementById("wel").play()
         localStorage.setItem("CucuRidu_Proprety_LastId",data)
         document.getElementById("inputname").value = getRandomNamea()
         userPfp = getRandomPfp()
@@ -131,33 +130,27 @@ Server.on("connected",(data)=>{
 (() => {
     let Playing = true
     document.getElementById("logo").addEventListener("click",()=>{
-        if(localStorage.getItem("CucuRidu_Proprety_Sound"))
+        if(Playing)
         {
-            if(Playing)
-            {
-                document.getElementById("music").play()
-                Playing = false
-            }
-            else
-            {
-                document.getElementById("music").pause()
-                Playing = true
-            }
+            document.getElementById("music").play()
+            Playing = false
+        }
+        else
+        {
+            document.getElementById("music").pause()
+            Playing = true
         }
     })
     document.addEventListener('visibilitychange',()=>{
-        if(localStorage.getItem("CucuRidu_Proprety_Sound"))
+        if (document.hidden) 
         {
-            if (document.hidden) 
+            document.getElementById("music").pause()
+        }
+        else
+        {
+            if(!Playing)
             {
-                document.getElementById("music").pause()
-            }
-            else
-            {
-                if(!Playing)
-                {
-                    document.getElementById("music").play()
-                }
+                document.getElementById("music").play()
             }
         }
     })
@@ -705,38 +698,14 @@ setInterval(()=>{
     document.getElementById("inputroomcode").value == "" ? document.getElementById("inputroomcode").style="" : document.getElementById("inputroomcode").style="text-transform: uppercase;";
 },0)
 
-document.getElementById("settings").addEventListener("click",()=>{
-    document.getElementById("home").style.display = "none"
-    document.getElementById("set").style.display = "flex"
-})
-
-document.getElementById("sound").addEventListener("click",()=>{
-    const u = localStorage.getItem("CucuRidu_Proprety_Sound") || true
-    localStorage.setItem("CucuRidu_Proprety_Sound",!u)
-})
-
-setInterval(()=>{
-    if(localStorage.getItem("CucuRidu_Proprety_Sound"))
-    {
-        document.getElementById("sound").innerText = "Sound: On"
-    }
-    else
-    {
-        document.getElementById("sound").innerText = "Sound: Off"
-    }
-},0)
-
 document.getElementById("segnala").addEventListener("click",()=>{
     window.location.href = "mailto:devcolombaramarco@gmail.com?subject=Report a problem | Cucu Ridu&body=Problem : "
 })
 
 document.querySelectorAll("button").forEach((ele) => {
     ele.addEventListener("click",()=>{
-        if(localStorage.getItem("CucuRidu_Proprety_Sound"))
-        {
-            const u = Math.floor(Math.random() * (14 - 1) + 1)
-            document.getElementById("but" + u).play()
-        }
+        const u = Math.floor(Math.random() * (14 - 1) + 1)
+        document.getElementById("but" + u).play()
     })
 })
 
