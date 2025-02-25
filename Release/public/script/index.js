@@ -1,4 +1,5 @@
-(() => {"use strict";
+"use strict";
+(() => {
 /*App StartUp*/
 const colors = ["#FED6E2", "#FFD2C1", "#FFF5B3", "#E9FFC1", "#C1FFF0", "#D6EBFE", "#DEC1FF"]
 const logoCount = 7
@@ -15,6 +16,10 @@ let user;
 let interval
 let quest
 let lepri
+if(!localStorage.getItem("CucuRidu_Proprety_Sound"))
+{
+    localStorage.setItem("CucuRidu_Proprety_Sound",true)
+}
 const startHeartbeat = () => {
     if (!interval) {
         interval = setInterval(() => {
@@ -111,7 +116,8 @@ Server.on("connected",(data)=>{
     user = new User("name",data,0)
     document.getElementById("ghj").innerText = "...now click the cat"
     document.getElementById("oggy").addEventListener("click",()=>{
-        document.getElementById("wel").play()
+        if(localStorage.getItem("CucuRidu_Proprety_Sound"))
+            document.getElementById("wel").play()
         localStorage.setItem("CucuRidu_Proprety_LastId",data)
         document.getElementById("inputname").value = getRandomNamea()
         userPfp = getRandomPfp()
@@ -125,27 +131,33 @@ Server.on("connected",(data)=>{
 (() => {
     let Playing = true
     document.getElementById("logo").addEventListener("click",()=>{
-        if(Playing)
+        if(localStorage.getItem("CucuRidu_Proprety_Sound"))
         {
-            document.getElementById("music").play()
-            Playing = false
-        }
-        else
-        {
-            document.getElementById("music").pause()
-            Playing = true
+            if(Playing)
+            {
+                document.getElementById("music").play()
+                Playing = false
+            }
+            else
+            {
+                document.getElementById("music").pause()
+                Playing = true
+            }
         }
     })
     document.addEventListener('visibilitychange',()=>{
-        if (document.hidden) 
+        if(localStorage.getItem("CucuRidu_Proprety_Sound"))
         {
-            document.getElementById("music").pause()
-        }
-        else
-        {
-            if(!Playing)
+            if (document.hidden) 
             {
-                document.getElementById("music").play()
+                document.getElementById("music").pause()
+            }
+            else
+            {
+                if(!Playing)
+                {
+                    document.getElementById("music").play()
+                }
             }
         }
     })
@@ -672,17 +684,46 @@ Server.on("disconnect",() => {
 (() => {
     let alr = true;
     const endSession = () => {
-        if (alr) 
+        const rep = confirm("Vuoi veramente uscire ?")
+        if(rep)
         {
-            Server.emit("destroyed", { id: user.unicid });
-            alr = false;
+            if (alr) 
+            {
+                Server.emit("destroyed", { id: user.unicid });
+                alr = false;
+                return;
+            }
         }
     };
-    window.addEventListener("beforeunload", endSession);
+    window.addEventListener("beforeunload", (e) => {
+        e.preventDefault()
+        endSession()
+    });
 })();
 
 setInterval(()=>{
     document.getElementById("inputroomcode").value == "" ? document.getElementById("inputroomcode").style="" : document.getElementById("inputroomcode").style="text-transform: uppercase;";
+},0)
+
+document.getElementById("settings").addEventListener("click",()=>{
+    document.getElementById("home").style.display = "none"
+    document.getElementById("set").style.display = "flex"
+})
+
+document.getElementById("sound").addEventListener("click",()=>{
+    const u = localStorage.getItem("CucuRidu_Proprety_Sound") || true
+    localStorage.setItem("CucuRidu_Proprety_Sound",!u)
+})
+
+setInterval(()=>{
+    if(localStorage.getItem("CucuRidu_Proprety_Sound"))
+    {
+        document.getElementById("sound").innerText = "Sound: On"
+    }
+    else
+    {
+        document.getElementById("sound").innerText = "Sound: Off"
+    }
 },0)
 
 document.getElementById("segnala").addEventListener("click",()=>{
@@ -691,8 +732,11 @@ document.getElementById("segnala").addEventListener("click",()=>{
 
 document.querySelectorAll("button").forEach((ele) => {
     ele.addEventListener("click",()=>{
-        const u = Math.floor(Math.random() * (14 - 1) + 1)
-        document.getElementById("but" + u).play()
+        if(localStorage.getItem("CucuRidu_Proprety_Sound"))
+        {
+            const u = Math.floor(Math.random() * (14 - 1) + 1)
+            document.getElementById("but" + u).play()
+        }
     })
 })
 
