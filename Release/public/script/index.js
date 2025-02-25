@@ -116,7 +116,8 @@ Server.on("connected",(data)=>{
     user = new User("name",data,0)
     document.getElementById("ghj").innerText = "...now click the cat"
     document.getElementById("oggy").addEventListener("click",()=>{
-        document.getElementById("wel").play()
+        if(localStorage.getItem("CucuRidu_Proprety_Sound") == "true")
+            document.getElementById("wel").play()
         localStorage.setItem("CucuRidu_Proprety_LastId",data)
         document.getElementById("inputname").value = getRandomNamea()
         userPfp = getRandomPfp()
@@ -130,27 +131,33 @@ Server.on("connected",(data)=>{
 (() => {
     let Playing = true
     document.getElementById("logo").addEventListener("click",()=>{
-        if(Playing)
+        if(localStorage.getItem("CucuRidu_Proprety_Sound") == "true")
         {
-            document.getElementById("music").play()
-            Playing = false
-        }
-        else
-        {
-            document.getElementById("music").pause()
-            Playing = true
+            if(Playing)
+            {
+                document.getElementById("music").play()
+                Playing = false
+            }
+            else
+            {
+                document.getElementById("music").pause()
+                Playing = true
+            }
         }
     })
     document.addEventListener('visibilitychange',()=>{
-        if (document.hidden) 
+        if(localStorage.getItem("CucuRidu_Proprety_Sound") == "true")
         {
-            document.getElementById("music").pause()
-        }
-        else
-        {
-            if(!Playing)
+            if (document.hidden) 
             {
-                document.getElementById("music").play()
+                document.getElementById("music").pause()
+            }
+            else
+            {
+                if(!Playing)
+                {
+                    document.getElementById("music").play()
+                }
             }
         }
     })
@@ -677,25 +684,45 @@ Server.on("disconnect",() => {
 (() => {
     let alr = true;
     const endSession = () => {
-        const rep = confirm("Vuoi veramente uscire ?")
-        if(rep)
+        if (alr) 
         {
-            if (alr) 
-            {
-                Server.emit("destroyed", { id: user.unicid });
-                alr = false;
-                return;
-            }
+            Server.emit("destroyed", { id: user.unicid });
+            alr = false;
         }
     };
-    window.addEventListener("beforeunload", (e) => {
-        e.preventDefault()
-        endSession()
-    });
+    window.addEventListener("beforeunload", endSession);
 })();
 
 setInterval(()=>{
     document.getElementById("inputroomcode").value == "" ? document.getElementById("inputroomcode").style="" : document.getElementById("inputroomcode").style="text-transform: uppercase;";
+},0)
+
+document.getElementById("settings").addEventListener("click",()=>{
+    document.getElementById("home").style.display = "none"
+    document.getElementById("set").style.display = "flex"
+})
+
+document.getElementById("backset").addEventListener("click",()=>{
+    document.getElementById("set").style.display = "none"
+    document.getElementById("home").style.display = "flex"
+})
+
+document.getElementById("sound").addEventListener("click",()=>{
+    if(localStorage.getItem("CucuRidu_Proprety_Sound") == "true")
+        localStorage.setItem("CucuRidu_Proprety_Sound",false)
+    else
+        localStorage.setItem("CucuRidu_Proprety_Sound",true)
+})
+
+setInterval(()=>{
+    if(localStorage.getItem("CucuRidu_Proprety_Sound") == "true")
+    {
+        document.getElementById("sound").innerText = "Sound: On"
+    }
+    else
+    {
+        document.getElementById("sound").innerText = "Sound: Off"
+    }
 },0)
 
 document.getElementById("segnala").addEventListener("click",()=>{
@@ -704,8 +731,11 @@ document.getElementById("segnala").addEventListener("click",()=>{
 
 document.querySelectorAll("button").forEach((ele) => {
     ele.addEventListener("click",()=>{
-        const u = Math.floor(Math.random() * (14 - 1) + 1)
-        document.getElementById("but" + u).play()
+        if(localStorage.getItem("CucuRidu_Proprety_Sound") == "true")
+        {
+            const u = Math.floor(Math.random() * (14 - 1) + 1)
+            document.getElementById("but" + u).play()
+        }
     })
 })
 
