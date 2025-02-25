@@ -8,7 +8,7 @@
     font-optical-sizing: auto;
     font-variation-settings:
       "width" 101.5;
-    transition: all ease 0.2s;
+    transition: all ease 0.1s;
     overflow: hidden;
 }
 *::-webkit-scrollbar

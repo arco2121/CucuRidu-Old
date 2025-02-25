@@ -749,7 +749,7 @@ document.addEventListener("click", function(event) {
     event.preventDefault();
     setTimeout(() => {
         event.target.dispatchEvent(new Event("delayedClick", { bubbles: true }));
-    }, 150);
+    }, 50);
 });
 
 })();
