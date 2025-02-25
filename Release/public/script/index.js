@@ -20,24 +20,8 @@ if(!localStorage.getItem("CucuRidu_Proprety_Sound"))
 {
     localStorage.setItem("CucuRidu_Proprety_Sound",true)
 }
-const startHeartbeat = () => {
-    if (!interval) {
-        interval = setInterval(() => {
-            if(Server.connected) 
-            {
-                Server.emit("heartbeat");
-            }
-        }, 2000);
-    }
-}
-const stopHeartbeat = () => {
-    if (interval) {
-        clearInterval(interval);
-        interval = null;
-    }
-}
-
 document.getElementById("inputname").value = getRandomNamea()
+
 const imgUserPath = (n) => {
     return "./img/userimg/" + n + '.jpg'
 }
@@ -48,6 +32,23 @@ window.addEventListener("load",()=>{
     operative(Server)
 });
 const operative = (Server) => {
+    const startHeartbeat = () => {
+        if (!interval) {
+            interval = setInterval(() => {
+                if(Server.connected) 
+                {
+                    Server.emit("heartbeat");
+                }
+            }, 2000);
+        }
+    }
+    const stopHeartbeat = () => {
+        if (interval) {
+            clearInterval(interval);
+            interval = null;
+        }
+    }    
+
     (() => {
         const color = colors[Math.floor(Math.random() * (colors.length))]
         const logoPath = "./img/logoimg/" + Math.floor(Math.random() * (logoCount - 1) + 1) + ".png"
