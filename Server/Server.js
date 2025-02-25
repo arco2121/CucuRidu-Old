@@ -1,3 +1,4 @@
+(() => {
 const express = require('express')
 const http = require("http")
 const {Server} = require("socket.io")
@@ -380,3 +381,4 @@ setInterval(() => {
 server.listen(port, () => {
     console.log("Server : http://localhost:" + port)
 })
+})();
