@@ -27,7 +27,7 @@ webserver.on("connection",(socket) => {
     socket.on("createRoom",(data) => {
         try
         {
-            const room = Rooms.Create(data.name,socket.id,data.img)
+            const room = Rooms.Create(data.name,socket.id,data.img,data.safe)
             socket.join(room.id)
             console.log("Room : " + room.id + " created")
             webserver.to(socket.id).emit("roomCreated",{roomId : room.id, user : room.admin.toJSON()})

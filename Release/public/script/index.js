@@ -1,4 +1,3 @@
-"use strict";
 (() => {
 /*App StartUp*/
 const colors = ["#FED6E2", "#FFD2C1", "#FFF5B3", "#E9FFC1", "#C1FFF0", "#D6EBFE", "#DEC1FF"]
@@ -177,7 +176,7 @@ const operative = (Server) => {
             {
                 localStorage.setItem("CucuRidu_Proprety_LastName",document.getElementById("inputname").value)
                 document.getElementById("chooseName").removeEventListener("delayedClick",temp)
-                Server.emit("createRoom",{name : document.getElementById("inputname").value.toString(), img : userPfp})
+                Server.emit("createRoom",{name : document.getElementById("inputname").value.toString(), img : userPfp, safe: localStorage.getItem("CucuRidu_Proprety_FamilyMode") == "true" ? true : false})
             }
             else
             {
@@ -718,6 +717,13 @@ const operative = (Server) => {
         else
             localStorage.setItem("CucuRidu_Proprety_Sound",true)
     })
+
+    document.getElementById("family").addEventListener("delayedClick",()=>{
+        if(localStorage.getItem("CucuRidu_Proprety_FamilyMode") == "true")
+            localStorage.setItem("CucuRidu_Proprety_FamilyMode",false)
+        else
+            localStorage.setItem("CucuRidu_Proprety_FamilyMode",true)
+    })
     
     setInterval(()=>{
         if(localStorage.getItem("CucuRidu_Proprety_Sound") == "true")
@@ -727,6 +733,14 @@ const operative = (Server) => {
         else
         {
             document.getElementById("sound").innerText = "Sound: Off"
+        }
+        if(localStorage.getItem("CucuRidu_Proprety_FamilyMode") == "true")
+        {
+            document.getElementById("family").innerText = "Family Mode : On"
+        }
+        else
+        {
+            document.getElementById("family").innerText = "Family Mode : Off"
         }
     },0)
     
