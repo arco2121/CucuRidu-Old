@@ -158,7 +158,7 @@ const nounsAndAdjectives = {
 
 const getRandomNamea = () => {
   const u = Math.floor(Math.random() * nounsAndAdjectives.adjectives.length)
-  return nounsAndAdjectives.names[Math.floor(Math.random() * nounsAndAdjectives.names.length)] + " " + (nounsAndAdjectives.adjectives[u][0].toLowerCase() + nounsAndAdjectives.adjectives[u].slice(1))
+  return localStorage.getItem("CucuRidu_Proprety_FamilyMode") == "true" ? "" : nounsAndAdjectives.names[Math.floor(Math.random() * nounsAndAdjectives.names.length)] + " " + (nounsAndAdjectives.adjectives[u][0].toLowerCase() + nounsAndAdjectives.adjectives[u].slice(1))
 }
 
 const getRandomPfp = (old) => {

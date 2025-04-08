@@ -19,6 +19,10 @@ if(!localStorage.getItem("CucuRidu_Proprety_Sound"))
 {
     localStorage.setItem("CucuRidu_Proprety_Sound",true)
 }
+if(!localStorage.getItem("CucuRidu_Proprety_FamilyMode"))
+{
+    localStorage.setItem("CucuRidu_Proprety_FamilyMode",false)
+}
 document.getElementById("inputname").value = getRandomNamea()
 
 const imgUserPath = (n) => {
