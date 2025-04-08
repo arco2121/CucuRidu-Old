@@ -3327,11 +3327,7 @@ class Room
         }
         else
         {
-<<<<<<< HEAD
             for(let i = 0; i<QuestionsArrSafe.length;i++)
-=======
-            for(let i = 0; i<QuestionsArr.length;i++)
->>>>>>> 9e517f295e983496fa3283390843ff618c892903
             {
               temp[i] = new Card(QuestionsArrSafe[i][0],i,QuestionsArrSafe[i][1])
             }
@@ -3347,11 +3343,7 @@ class Room
         }
         else
         {
-<<<<<<< HEAD
             for(let i = 0; i<AnswerArrSafe.length;i++)
-=======
-            for(let i = 0; i<AnswerArr.length;i++)
->>>>>>> 9e517f295e983496fa3283390843ff618c892903
             {
               temp[i] = new Card(AnswerArrSafe[i][0],i,AnswerArrSafe[i][1])
             }
