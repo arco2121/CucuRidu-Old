@@ -328,14 +328,14 @@ webserver.on("connection",(socket) => {
             const user = room.Findd(data.id)
             if(user)
             {
-                socket.emit("connectInfoed", {
+                 webserver.to(socket.id).emit("connectInfoed", {
                     request : data.id,
                     connected : true,
                 })
             }
             else
             {
-                socket.emit("connectInfoed", {
+                 webserver.to(socket.id).emit("connectInfoed", {
                     request : data.id,
                     connected : false,
                 })

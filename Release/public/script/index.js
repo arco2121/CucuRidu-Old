@@ -699,7 +699,7 @@ const operative = (Server) => {
 
     Server.on("connectInfoed",(data) => {
         console.log("Connection Info: \n", data);
-    })
+    });
     
     (() => {
         let alr = true;
