@@ -609,3 +609,10 @@ input[type="text"]:active
         max-height: 150px;
     }
 }
+@media (max-height:450px)
+{
+    #whomess
+    {
+        display: none;
+    }
+}

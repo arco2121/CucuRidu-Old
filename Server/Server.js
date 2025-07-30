@@ -321,6 +321,28 @@ webserver.on("connection",(socket) => {
         }
     })
 
+    socket.on("connectInfo", (data) => {
+        const room = Rooms.FindRoom(data.id)
+        if(room)
+        {
+            const user = room.Findd(data.id)
+            if(user)
+            {
+                socket.emit("connectInfoed", {
+                    request : data.id,
+                    connected : true,
+                })
+            }
+            else
+            {
+                socket.emit("connectInfoed", {
+                    request : data.id,
+                    connected : false,
+                })
+            }
+        }
+    })
+
     socket.on("destroyed",(data) => {
         try
         {

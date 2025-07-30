@@ -1,3 +1,4 @@
+let connectInfo;
 (() => {
 /*App StartUp*/
 const colors = ["#FED6E2", "#FFD2C1", "#FFF5B3", "#E9FFC1", "#C1FFF0", "#D6EBFE", "#DEC1FF"]
@@ -11,8 +12,8 @@ let backtime = 500
 let esplodi
 let alreadyconnected = false
 let lastp = -1
-let user;
 let interval
+let user;
 let quest
 let lepri
 if(!localStorage.getItem("CucuRidu_Proprety_Sound"))
@@ -174,7 +175,8 @@ const operative = (Server) => {
     document.getElementById("createRoom").addEventListener("delayedClick",()=>{
         document.getElementById("home").style.display = "none"
         document.getElementById("askname").style.display = "flex"
-        document.getElementById("inputname").value = localStorage.getItem("CucuRidu_Proprety_LastName") || getRandomNamea()
+        const ranName = getRandomNamea()
+        document.getElementById("inputname").value = ranName == "" ? ranName  : localStorage.getItem("CucuRidu_Proprety_LastName")  || ranName
         const temp = ()=>{
             if(document.getElementById("inputname").value != "")
             {
@@ -198,7 +200,8 @@ const operative = (Server) => {
             {
                 document.getElementById("askroomcode").style.display = "none"
                 document.getElementById("askname").style.display = "flex"
-                document.getElementById("inputname").value = localStorage.getItem("CucuRidu_Proprety_LastName") || getRandomNamea()
+                const ranName = getRandomNamea()
+                document.getElementById("inputname").value = ranName == "" ? ranName  : localStorage.getItem("CucuRidu_Proprety_LastName")  || ranName
                 const temp = () => {
                     if(document.getElementById("inputname").value != "")
                     {
@@ -688,6 +691,15 @@ const operative = (Server) => {
         document.getElementById("offline").style.display = "flex"
         stopHeartbeat()
     });
+    setInterval(()=>{
+        connectInfo = () => {
+            Server.emit("connectInfo",{id : user.unicid})
+        };
+    },1000)
+
+    Server.on("connectInfoed",(data) => {
+        console.log("Connection Info: \n", data);
+    })
     
     (() => {
         let alr = true;
