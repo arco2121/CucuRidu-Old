@@ -325,7 +325,7 @@ webserver.on("connection",(socket) => {
         const room = Rooms.FindRoom(data.id)
         if(room)
         {
-            const user = room.Findd(data.id)
+            const user = room.Find(data.id)
             if(user)
             {
                  webserver.to(socket.id).emit("connectInfoed", {
