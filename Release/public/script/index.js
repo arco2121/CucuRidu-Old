@@ -1,4 +1,3 @@
-let connectInfo;
 (() => {
 /*App StartUp*/
 const colors = ["#FED6E2", "#FFD2C1", "#FFF5B3", "#E9FFC1", "#C1FFF0", "#D6EBFE", "#DEC1FF"]
@@ -12,8 +11,8 @@ let backtime = 500
 let esplodi
 let alreadyconnected = false
 let lastp = -1
-let interval
 let user;
+let interval
 let quest
 let lepri
 if(!localStorage.getItem("CucuRidu_Proprety_Sound"))
@@ -690,15 +689,6 @@ const operative = (Server) => {
     Server.on("disconnect",() => {
         document.getElementById("offline").style.display = "flex"
         stopHeartbeat()
-    });
-    setInterval(()=>{
-        connectInfo = () => {
-            Server.emit("connectInfo",{id : user.unicid})
-        };
-    },1000)
-
-    Server.on("connectInfoed",(data) => {
-        console.log("Connection Info: \n", data);
     });
     
     (() => {
